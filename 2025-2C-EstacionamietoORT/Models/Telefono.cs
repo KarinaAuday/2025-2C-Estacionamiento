@@ -15,7 +15,12 @@ namespace _2025_2C_EstacionamietoORT.Models
 
         public TipoTelefono Tipo { get; set; }
 
-        
+        //Propiedades Relaciones
+        public int ClienteId { get; set; }
+
+        //Propiedad de Navegacion
+        public Cliente Cliente { get; set; }
+
         public string NumeroCompleto { get { return $"({CodArea}) - {Numero}"; } }
     }
 }

@@ -13,5 +13,7 @@
 
         public int AnioFabricacion { get; set; } = DateTime.Now.Year;
 
+        List<ClienteVehiculo> ClienteVehiculos { get; set; }
+
     }
 }

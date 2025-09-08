@@ -13,6 +13,12 @@
 
         public string Provincia { get; set; }
 
-        
+        //Propiedades Relaciones
+        public int ClienteId { get; set; }
+
+        //Propiedad de Navegacion
+        public Cliente Cliente { get; set; }
+
+
     }
 }
