@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿
 
 namespace _2025_2C_EstacionamietoORT.Models
 {
