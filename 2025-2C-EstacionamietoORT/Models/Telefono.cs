@@ -1,5 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using _2025_2C_EstacionamietoORT.Helpers;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace _2025_2C_EstacionamietoORT.Models
 {
@@ -8,7 +9,10 @@ namespace _2025_2C_EstacionamietoORT.Models
         public int Id { get; set; }
         public int CodArea { get; set; }
 
+        [Required(ErrorMessage = ErrorMsg.Required)]
+        
         public string Numero { get; set; }
+
 
         public bool Principal { get; set; }
 
