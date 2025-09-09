@@ -11,6 +11,7 @@ namespace _2025_2C_EstacionamietoORT.Models
         [Required (ErrorMessage = ErrorMsg.Required)]
         [StringLength(50, MinimumLength = 2, ErrorMessage = ErrorMsg.StringLength)]
         [RegularExpression (@"^[a-zA-Z]+$" , ErrorMessage = ErrorMsg.SoloLetras)]
+      
         public string Nombre { get; set; }
 
         [Required(ErrorMessage = ErrorMsg.Required)]

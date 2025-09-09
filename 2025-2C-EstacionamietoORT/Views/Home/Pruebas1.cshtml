@@ -1,0 +1,46 @@
+﻿<h1>En esta pagina veremos algunos ejemplos de como funcionan las paginas con HTML y C# (Razor)</h1>
+@{
+    int numero = 5;
+    string texto = "Hola, este es un texto de ejemplo";
+}
+
+<div>
+    <h2>Ejemplo de variables en Razor</h2>
+    
+    <p>Numero: @numero</p>
+    <p>Texto: @texto</p>
+</div>
+
+@{
+    if (numero > 3)
+    {
+        <p>El numero es mayor que 3</p>
+    }
+    else
+    {
+        <p>El numero es 3 o menor</p>
+    }
+
+    // for (int i = 0; i < numero; i++)
+    // {   
+    //     <p> Muestro funcionamiento de un For</p>
+    //     <p>Iteracion: @i</p>
+    // }
+
+
+    <p> Ejmplo con Listas</p>
+
+  
+    List<int> numeros = new List<int> { 1, 2, 3, 4, 5 };
+    var numeroPares = numeros.Where(n => n % 2 == 0).ToList();
+    <p> Numeros Pares: </p>
+    foreach (var num in numeroPares)
+    {
+        <p>@num</p> 
+    }
+
+
+}      
+    
+    
+
