@@ -24,11 +24,21 @@ namespace _2025_2C_EstacionamietoORT.Controllers
             return View();
         }
 
-        public IActionResult Pruebas2()
+        public IActionResult Pruebas2(int num , string nombre , string apellido)
         {
-            return View();
+            ViewBag.Nombre = nombre;
+            ViewBag.Apellido = apellido;
+            return View(num);
         }
 
+
+        public IActionResult Pruebas3()
+        {
+            List<string> ciudades = new List<string> { "Buenos Aires", "Paris", "Madrid", "Rio de Janeiro" };
+            ViewBag.lasCiudades = ciudades;
+            return View(ciudades);
+
+        }
         public IActionResult Privacy()
         {
             return View();

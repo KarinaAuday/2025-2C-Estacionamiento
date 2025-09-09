@@ -1,0 +1,11 @@
+﻿@model List<string>
+<p>Estas son las ciudades pasadas por Model</p>
+ @foreach (var ciudad in Model)
+{
+    <p>@ciudad</p>
+}
+<p>Estas son las ciudades pasadas por ViewVag</p>
+@foreach (var c in ViewBag.lasCiudades)
+{
+    <p>@c</p>
+}
