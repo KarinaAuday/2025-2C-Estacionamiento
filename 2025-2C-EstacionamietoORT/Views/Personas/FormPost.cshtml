@@ -1,0 +1,16 @@
+﻿<h1>Crear una persona con un Formulario con metodo Post</h1>
+
+<form method="post" action="@Url.Action("CrearPersonas", "Personas")">
+    <div class="form-group">
+        <label>Ingrese su Nombre   </label>
+        <input type="text" id="Nombre" name="nombre" class="form-control" />
+        <label>Ingrese su Apellido</label>
+        <input type="text" id="Apellido" name="apellido" class="form-control" />
+        <label>Ingrese su dni   </label>
+        <input type="text" id="Dni" name="dni" class="form-control" />
+        <label>Ingrese su email</label>
+        <input type="text" id="email" name="email" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Enviar</button>
+
+</form>

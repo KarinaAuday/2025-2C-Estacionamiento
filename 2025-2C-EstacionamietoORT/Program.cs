@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace _2025_2C_EstacionamietoORT
 {
     public class Program
@@ -8,6 +10,10 @@ namespace _2025_2C_EstacionamietoORT
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            //Configuro la Base de Datos
+            builder.Services.AddDbContext<Data.EstacionamientoContext>(options =>
+            options.UseInMemoryDatabase("EstacionamientoDB"));
 
             var app = builder.Build();
 
