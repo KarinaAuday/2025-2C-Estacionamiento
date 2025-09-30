@@ -5,11 +5,11 @@
         public string Cuit { get; set; }
 
         //Propiedad Navegacional
-        public Direccion Direccion { get; set; }
+        public Direccion ? Direccion { get; set; }
 
         //Propiedad Navegacional
-        public List<Telefono> Telefonos { get; set; }
+        public List<Telefono> ? Telefonos { get; set; }
 
-        public List<ClienteVehiculo> ClientesVehiculos { get; set; }
+        public List<ClienteVehiculo> ? ClientesVehiculos { get; set; }
     }
 }

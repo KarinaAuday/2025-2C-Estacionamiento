@@ -20,7 +20,7 @@ namespace _2025_2C_EstacionamietoORT.Models
 
         public int AnioFabricacion { get; set; } = DateTime.Now.Year;
 
-        List<ClienteVehiculo> ClienteVehiculos { get; set; }
+        List<ClienteVehiculo>  ClienteVehiculos { get; set; }
 
     }
 }
