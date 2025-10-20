@@ -5,9 +5,19 @@
 }
 
 <h1>Index</h1>
+<p>Busqueda de Cliente por Apellido</p>
+
+
+<form method="get" action="@Url.Action("BuscarCliente", "Clientes")">
+    <input type="text" name="apellido" placeholder="Ingrese el apellido" />
+    <button type="submit">Buscar</button>
+</form>
+
+<br />
+<br />
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Agregar Cliente</a>
 </p>
 <table class="table">
     <thead>

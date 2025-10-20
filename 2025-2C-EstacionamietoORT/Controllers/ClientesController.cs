@@ -148,7 +148,15 @@ namespace _2025_2C_EstacionamietoORT.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        //Creo un Buscador
 
+        public ActionResult BuscarCliente(string apellido)
+        {
+            var clientes = _context.Cliente.Where(cli => cli.Apellido.Contains(apellido, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+            
+            return View(clientes);
+        }
         private bool ClienteExists(int id)
         {
             return _context.Cliente.Any(e => e.Id == id);
