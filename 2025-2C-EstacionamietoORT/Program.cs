@@ -1,3 +1,4 @@
+using _2025_2C_EstacionamietoORT.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace _2025_2C_EstacionamietoORT
@@ -12,9 +13,11 @@ namespace _2025_2C_EstacionamietoORT
             builder.Services.AddControllersWithViews();
 
             //Configuro la Base de Datos
-            builder.Services.AddDbContext<Data.EstacionamientoContext>(options =>
-            options.UseInMemoryDatabase("EstacionamientoDB"));
+            //builder.Services.AddDbContext<Data.EstacionamientoContext>(options =>
+            //options.UseInMemoryDatabase("EstacionamientoDB"));
 
+            //Configuro SQL Server
+            builder.Services.AddDbContext<EstacionamientoContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("EstacionamientoDBCS")));
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
