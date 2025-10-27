@@ -22,5 +22,16 @@ namespace _2025_2C_EstacionamietoORT.Models
 
         List<ClienteVehiculo>  ClienteVehiculos { get; set; }
 
+        public Vehiculo()
+        {
+        }
+
+        public Vehiculo(int patente, string marca, string color)
+        {
+            Patente = patente;
+            Marca = marca;
+            Color = color;
+        }
+
     }
 }
