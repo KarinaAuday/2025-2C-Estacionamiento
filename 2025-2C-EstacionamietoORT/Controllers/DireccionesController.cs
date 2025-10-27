@@ -46,9 +46,27 @@ namespace _2025_2C_EstacionamietoORT.Controllers
         }
 
         // GET: Direcciones/Create
-        public IActionResult Create()
+        //public IActionResult Create()
+        //{
+        //    ViewData["ClienteId"] = new SelectList(_context.Cliente, "Id", "Apellido");
+        //    return View();
+        //}
+        public IActionResult Create(int? id)
         {
-            ViewData["ClienteId"] = new SelectList(_context.Cliente, "Id", "Apellido");
+            if (id.HasValue)
+            {
+                var cliente = _context.Cliente.FirstOrDefault(p => p.Id == id);
+                if (cliente != null)
+                {
+                    ViewBag.Nombre = cliente.Nombre;
+                    ViewBag.ClienteCrearId = cliente.Id;
+                    ViewBag.Apellido = cliente.Apellido;
+                
+
+                }
+
+
+            }
             return View();
         }
 
@@ -57,7 +75,7 @@ namespace _2025_2C_EstacionamietoORT.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Calle,Altura,CodigoPostal,Localidad,Provincia,ClienteId")] Direccion direccion)
+        public async Task<IActionResult> Create([Bind("Calle,Altura,CodigoPostal,Localidad,Provincia,ClienteId")] Direccion direccion)
         {
             if (ModelState.IsValid)
             {

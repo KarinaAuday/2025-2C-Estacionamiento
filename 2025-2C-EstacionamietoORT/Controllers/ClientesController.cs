@@ -60,7 +60,8 @@ namespace _2025_2C_EstacionamietoORT.Controllers
             {
                 _context.Add(cliente);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                //return RedirectToAction(nameof(Index));
+                return RedirectToAction("Create", "Direcciones", new { id = cliente.Id });
             }
             return View(cliente);
         }
