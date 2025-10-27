@@ -22,50 +22,6 @@ namespace _2025_2C_EstacionamietoORT.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("_2025_2C_EstacionamietoORT.Models.Cliente", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Apellido")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Cuit")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Dni")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("FechaAlta")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Telefono")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Cliente");
-                });
-
             modelBuilder.Entity("_2025_2C_EstacionamietoORT.Models.ClienteVehiculo", b =>
                 {
                     b.Property<int>("Id")
@@ -126,6 +82,56 @@ namespace _2025_2C_EstacionamietoORT.Migrations
                     b.ToTable("Direccion");
                 });
 
+            modelBuilder.Entity("_2025_2C_EstacionamietoORT.Models.Persona", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Apellido")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("nvarchar(8)");
+
+                    b.Property<string>("Dni")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("FechaAlta")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Telefono")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Persona");
+
+                    b.HasDiscriminator().HasValue("Persona");
+
+                    b.UseTphMappingStrategy();
+                });
+
             modelBuilder.Entity("_2025_2C_EstacionamietoORT.Models.Telefono", b =>
                 {
                     b.Property<int>("Id")
@@ -181,6 +187,16 @@ namespace _2025_2C_EstacionamietoORT.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Vehiculo");
+                });
+
+            modelBuilder.Entity("_2025_2C_EstacionamietoORT.Models.Cliente", b =>
+                {
+                    b.HasBaseType("_2025_2C_EstacionamietoORT.Models.Persona");
+
+                    b.Property<string>("Cuit")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasDiscriminator().HasValue("Cliente");
                 });
 
             modelBuilder.Entity("_2025_2C_EstacionamietoORT.Models.ClienteVehiculo", b =>

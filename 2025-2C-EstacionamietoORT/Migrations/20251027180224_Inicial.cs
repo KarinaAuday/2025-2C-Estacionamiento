@@ -12,23 +12,24 @@ namespace _2025_2C_EstacionamietoORT.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Cliente",
+                name: "Persona",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Cuit = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Nombre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Apellido = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Dni = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Telefono = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FechaAlta = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    FechaAlta = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Discriminator = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
+                    Cuit = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Cliente", x => x.Id);
+                    table.PrimaryKey("PK_Persona", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -64,9 +65,9 @@ namespace _2025_2C_EstacionamietoORT.Migrations
                 {
                     table.PrimaryKey("PK_Direccion", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Direccion_Cliente_ClienteId",
+                        name: "FK_Direccion_Persona_ClienteId",
                         column: x => x.ClienteId,
-                        principalTable: "Cliente",
+                        principalTable: "Persona",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -87,9 +88,9 @@ namespace _2025_2C_EstacionamietoORT.Migrations
                 {
                     table.PrimaryKey("PK_Telefono", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Telefono_Cliente_ClienteId",
+                        name: "FK_Telefono_Persona_ClienteId",
                         column: x => x.ClienteId,
-                        principalTable: "Cliente",
+                        principalTable: "Persona",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -108,9 +109,9 @@ namespace _2025_2C_EstacionamietoORT.Migrations
                 {
                     table.PrimaryKey("PK_ClienteVehiculo", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ClienteVehiculo_Cliente_ClienteId",
+                        name: "FK_ClienteVehiculo_Persona_ClienteId",
                         column: x => x.ClienteId,
-                        principalTable: "Cliente",
+                        principalTable: "Persona",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -159,7 +160,7 @@ namespace _2025_2C_EstacionamietoORT.Migrations
                 name: "Vehiculo");
 
             migrationBuilder.DropTable(
-                name: "Cliente");
+                name: "Persona");
         }
     }
 }
