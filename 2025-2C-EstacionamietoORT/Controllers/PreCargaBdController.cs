@@ -1,6 +1,9 @@
 ﻿using _2025_2C_EstacionamietoORT.Data;
+using _2025_2C_EstacionamietoORT.Helpers;
 using _2025_2C_EstacionamietoORT.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace _2025_2C_EstacionamietoORT.Controllers
 {
@@ -8,11 +11,17 @@ namespace _2025_2C_EstacionamietoORT.Controllers
     {
 
         private readonly EstacionamientoContext _context;
-
-        public PreCargaBdController(EstacionamientoContext context)
-        {
+        private readonly UserManager<Persona> _userManager;
+        private readonly RoleManager<Rol> _roleManager;
+        private readonly List<string> roles = new List<string>() { Configs.EmpleadoRolName, Configs.ClienteRolName, Configs.AdminRolName };
+        public PreCargaBdController(UserManager<Persona> userManager, RoleManager<Rol> roleManager, EstacionamientoContext context)
+        {//Agrego usario y roles
+            this._userManager = userManager;
+            this._roleManager = roleManager;
             _context = context;
         }
+
+       
         #region PreCargaClientes
         //private List<Cliente> clientes = new List<Cliente>
         //{
@@ -51,9 +60,9 @@ namespace _2025_2C_EstacionamietoORT.Controllers
         #region Lista de Vehiculos
         private List<Vehiculo> vehiculos = new List<Vehiculo>()
         {
-            new Vehiculo(2034444,"Ford taunus" , "Verde"),
-            new Vehiculo(8484848, "Renault Clio" , "Azul") ,
-            new Vehiculo(5647866, "Mercedes benz" , "amarillo"),
+            new Vehiculo(25656588,"Ford taunus" , "Verde"),
+            new Vehiculo(96969696, "Renault Clio" , "Azul") ,
+            new Vehiculo(33333333, "Mercedes benz" , "amarillo"),
         };
         #endregion
 
@@ -86,11 +95,23 @@ namespace _2025_2C_EstacionamietoORT.Controllers
 
         public IActionResult InicializarBD()
         {
+            CrearRoles().Wait();
             inicializarClientes();
             crearVehiculos();
             TempData["PrecargaOK"] = "Base de datos inicializada con datos de prueba.";
             return RedirectToAction("Index", "Home");
            
+        }
+
+        private async Task CrearRoles()
+        {
+            foreach (var rolName in roles)
+            {
+                if (!await _roleManager.RoleExistsAsync(rolName))
+                {
+                    await _roleManager.CreateAsync(new Rol(rolName));
+                }
+            }
         }
     }
 }

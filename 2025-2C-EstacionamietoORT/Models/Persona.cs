@@ -1,12 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
-using _2025_2C_EstacionamietoORT.Helpers;
+﻿using _2025_2C_EstacionamietoORT.Helpers;
+using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace _2025_2C_EstacionamietoORT.Models
 {
-    public class Persona
+    public class Persona : IdentityUser<int>
     {
       
-        public int Id { get; set; }
+       //public int Id { get; set; }
 
         [Required (ErrorMessage = ErrorMsg.Required)]
         [StringLength(50, MinimumLength = 2, ErrorMessage = ErrorMsg.StringLength)]
@@ -25,16 +26,33 @@ namespace _2025_2C_EstacionamietoORT.Models
         [Required(ErrorMessage = ErrorMsg.Required)]
 
         [DataType(DataType.EmailAddress)]
-        public string Email { get; set; }
+       // public string Email { get; set; }
+
+        public override string Email
+        {
+            get { return base.Email; }
+            set { base.Email = value; }
+        }
         [Required(ErrorMessage = ErrorMsg.Required)]
-        public string UserName { get; set; }
+        public override string UserName
+        {
+            get { return base.UserName; }
+            set { base.UserName = value; }
+        }
 
         [DataType(DataType.PhoneNumber)]
         public string Telefono { get; set; }
 
         public DateTime FechaAlta   { get; set; }
 
-       // public string Direccion { get; set; }
+        public string NombreCompleto
+        {
+            get
+            {
+                return $"{Nombre}, {Apellido}";
+            }
+
+        }
 
     }
 }

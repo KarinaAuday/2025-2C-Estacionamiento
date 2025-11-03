@@ -87,9 +87,11 @@ namespace _2025_2C_EstacionamietoORT.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Cuit,Id,Nombre,Apellido,Dni,Email,UserName,Telefono,FechaAlta")] Cliente cliente)
+
+        public async Task<IActionResult> Edit(int id, [Bind("Cuil,Id,Nombre,Apellido,Dni,Email,Profesion")] Cliente clienteDelFormulario)
         {
-            if (id != cliente.Id)
+            //Con ClienteFomulario Hacemos un mapeo Actualizando los campos que yo quiera
+            if (id != clienteDelFormulario.Id)
             {
                 return NotFound();
             }
@@ -98,12 +100,25 @@ namespace _2025_2C_EstacionamietoORT.Controllers
             {
                 try
                 {
-                    _context.Update(cliente);
+                    var clienteEnDb = _context.Cliente.Find(clienteDelFormulario.Id);
+                    if (clienteEnDb == null)
+                    {
+                        return NotFound();
+                    }
+
+                    clienteEnDb.Cuit = clienteDelFormulario.Cuit;
+                    clienteEnDb.Dni = clienteDelFormulario.Dni;
+                    clienteEnDb.Nombre = clienteDelFormulario.Nombre;
+                    clienteEnDb.Apellido = clienteDelFormulario.Apellido;
+
+
+
+                    _context.Update(clienteEnDb);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ClienteExists(cliente.Id))
+                    if (!ClienteExists(clienteDelFormulario.Id))
                     {
                         return NotFound();
                     }
@@ -114,7 +129,7 @@ namespace _2025_2C_EstacionamietoORT.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(cliente);
+            return View(clienteDelFormulario);
         }
 
         // GET: Clientes/Delete/5
