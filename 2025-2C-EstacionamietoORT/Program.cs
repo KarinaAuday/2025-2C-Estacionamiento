@@ -1,4 +1,6 @@
 using _2025_2C_EstacionamietoORT.Data;
+using _2025_2C_EstacionamietoORT.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace _2025_2C_EstacionamietoORT
@@ -18,6 +20,18 @@ namespace _2025_2C_EstacionamietoORT
 
             //Configuro SQL Server
             builder.Services.AddDbContext<EstacionamientoContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("EstacionamientoDBCS")));
+            #region Identity
+            builder.Services.AddIdentity<Persona, Rol>().AddEntityFrameworkStores<EstacionamientoContext>();
+
+            builder.Services.Configure<IdentityOptions>(options =>
+            {
+                // Password settings
+                options.Password.RequireDigit = true;
+                options.Password.RequireNonAlphanumeric = false;
+               
+            });
+            #endregion Identity
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

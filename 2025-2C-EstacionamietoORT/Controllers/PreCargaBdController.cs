@@ -1,6 +1,9 @@
 ﻿using _2025_2C_EstacionamietoORT.Data;
+using _2025_2C_EstacionamietoORT.Helpers;
 using _2025_2C_EstacionamietoORT.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace _2025_2C_EstacionamietoORT.Controllers
 {
@@ -8,10 +11,19 @@ namespace _2025_2C_EstacionamietoORT.Controllers
     {
 
         private readonly EstacionamientoContext _context;
-
-        public PreCargaBdController(EstacionamientoContext context)
+        private readonly RoleManager<Rol> _roleManager;
+        private readonly UserManager<Persona> _userManager;
+        private List<string> roles = new List<string>
+        {
+            Configs.Admin,
+            Configs.Empleado,
+            Configs.Cliente
+        };
+        public PreCargaBdController(EstacionamientoContext context, UserManager<Persona> userManager, RoleManager<Rol> roleManager)
         {
             _context = context;
+            this._userManager = userManager;
+            this._roleManager = roleManager;
         }
         #region PreCargaClientes
         //private List<Cliente> clientes = new List<Cliente>
@@ -21,7 +33,7 @@ namespace _2025_2C_EstacionamietoORT.Controllers
         //    new Cliente { Nombre = "Luis", Apellido = "Martínez", Dni = "11223344" , Email ="Alber@ort.edu.ar" , Cuit="4444444"}
 
         //};
-        private void inicializarClientes()
+        private async Task inicializarClientes()
         {
             Cliente cliente1 = new Cliente
             {
@@ -29,11 +41,12 @@ namespace _2025_2C_EstacionamietoORT.Controllers
                 Apellido = "Baglietto",
                 Dni = "97528788",
                 Email = "Baglieto@gmail.com",
-                Cuit = "2034444" ,
-                UserName = "Baglietto",
+                Cuit = "2034444",           
             };
-            _context.Add(cliente1);
-            _context.SaveChanges();
+            cliente1.UserName = cliente1.Email;
+            await _userManager.CreateAsync(cliente1, Configs.passwordGenerica);
+            await _userManager.AddToRoleAsync(cliente1, Configs.Cliente);
+
             Direccion direccion1 = new Direccion
             {
                 Calle = "Calle Falsa",
@@ -84,13 +97,24 @@ namespace _2025_2C_EstacionamietoORT.Controllers
         }
 
 
-        public IActionResult InicializarBD()
+        public async Task<IActionResult> InicializarBD()
         {
-            inicializarClientes();
+            cargarRoles();
+            await inicializarClientes();
             crearVehiculos();
             TempData["PrecargaOK"] = "Base de datos inicializada con datos de prueba.";
             return RedirectToAction("Index", "Home");
-           
+
+        }
+
+        private void cargarRoles()
+        {
+            foreach (var rolNombre in roles)
+            {
+                _roleManager.CreateAsync(new Rol(rolNombre));
+
+            }
+            _context.SaveChanges();
         }
     }
 }
